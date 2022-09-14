@@ -5,7 +5,7 @@ import Square from "./Components/Square";
 
 function App() {
   const [board, setBoard] = useState(["","","","","","","","","",])
-  const [player, setPlayer] = useState('X');
+  const [player, setPlayer] = useState('O');
 
   useEffect(()=>{
 
@@ -22,8 +22,10 @@ function App() {
     setBoard(
       board.map((val,indx)=>{
         
-        if(square === indx)
+        if(square == indx && val == "")
             return player
+
+        return val;
       } )
     )
 
