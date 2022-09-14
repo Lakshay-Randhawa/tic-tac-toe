@@ -1,0 +1,23 @@
+.app{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+
+}
+body{
+   margin: 0;
+   padding: 0;
+}
+.board-wrapper{
+    width: 50vw;
+    height: 50vh;
+    background-color: aqua;
+}
+
+.board-row{
+    flex: 33%;
+    display: flex;
+    height: 33%;
+}
