@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useDebugValue, useEffect, useState } from "react";
 import "./App.css";
 import Square from "./Components/Square";
 
@@ -14,30 +14,33 @@ function App() {
     [2, 5, 8],
     [0, 4, 8],
     [2, 4, 6],
-  ]
+  ];
 
   const [board, setBoard] = useState(boardIntitialState);
   const [player, setPlayer] = useState("O");
   const [isTie, setTie] = useState(false);
-  const [score, setScore] = useState({X : 0, Y : 0});
+  const [score, setScore] = useState({ X: 0, O: 0 });
 
   useEffect(() => {
+    checkWin();
 
-    checkWin()
-    
     // Checking if it's a tie
     !board.includes("") ? setTie(true) : setTie(false);
-    
+
     if (isTie) resetGame();
-    
+
     // Changing player after turn
     player === "X" ? setPlayer("O") : setPlayer("X");
   }, [board]);
 
+  useEffect(() => {
+    console.log(score);
+  }, [score]);
+
   const move = (square) => {
     setBoard(
       board.map((val, indx) => {
-        if (square == indx && val == "") return player;
+        if (square === indx && val === "") return player;
 
         return val;
       })
@@ -45,16 +48,19 @@ function App() {
   };
 
   const checkWin = () => {
-     patterns.forEach(pattern => {
-       const [s1, s2, s3] = pattern;
-       
-         if(board[s1] == '' || board[s2] == '' || board[s3] == '') return;
-         
-         if(board[s1] == board[s2] && board[s2] == board[s3] ){
-             
-         }
-     })
-  }
+    patterns.forEach((pattern) => {
+      const [s1, s2, s3] = pattern;
+
+      if (board[s1] === "" || board[s2] === "" || board[s3] === "") return;
+
+      if (board[s1] === board[s2] && board[s2] === board[s3]) {
+        board[s1] === "X"
+          ? setScore({ ...score, X: { ...score }.X + 1 })
+          : setScore({ ...score, O: { ...score }.O + 1 });
+        resetGame();
+      }
+    });
+  };
 
   const resetGame = () => {
     setBoard(boardIntitialState);
